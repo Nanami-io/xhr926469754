@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヨルシカ 成员介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background:
+            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url('../images/夜空.png');
+            background-size: cover; 
+            padding: 2px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0px;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            padding: 5px 10px;
+        }
+        
+        nav ul li a:hover {
+            color: #aaa;
+            border-bottom: 2px solid #fff;
+        }
+     
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #e0e0e0;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 3px;
+            background: #f3f2f2;
+            margin: 15px auto;
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .main-members {
+            margin-bottom: 60px;
+        }
+        
+        .member {
+            background: #1e1e1e;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .main-member {
+            position: relative;
+        }
+        
+        .member-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #333, #555);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 4px solid #ffffff;
+        }
+        
+        .member-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+        
+        .main-member:hover .member-img::before {
+            opacity: 1;
+        }
+        
+        .member-info {
+            padding: 0 10px;
+        }
+        
+        .member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+        
+        .member p {
+            color: #aaa;
+            font-size: 1rem;
+        }
+        
+        .member-bio {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.95);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 70%;
+            overflow-y: auto;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .main-member:hover .member-bio {
+            transform: translateY(0);
+        }
+        
+        .assistant-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.8rem;
+            margin: 30px 0 20px;
+            color: #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .member-img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        
+        
+        
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ヨルシカ</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.htm">首页</a></li>
+                    <li><a href="成员介绍.html" style="color: #aaa; border-bottom: 2px solid #fff;">成员介绍</a></li>
+                    <li><a href="乐队活动.html">乐队活动</a></li>
+                    <li><a href="音乐专辑.html">音乐专辑</a></li>
+                    <li><a href="演出经历.html" >演出经历</a></li>
+                    <li><a href="https://yorushika.com/">官方网站</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+         <!-- 乐队成员 -->
+<section id="members" class="section">
+        <div class="container">
+            <h2 class="section-title">乐队成员</h2>
+            
+            <div class="main-members">
+                <h3 class="assistant-title">主要成员</h3>
+                <div class="members-grid">
+                    <div class="member main-member">
+                        <div class="member-img">
+                           <img src="../images/ナブナ.jpg" style="object-fit: cover; width: 100%; height: 100%;" alt="n-buna">
+                        </div>
+                        <div class="member-info">
+                            <h3>n-buna</h3>
+                            <p>作词、作曲、编曲</p>
+                        </div>
+                        <div class="member-bio">
+                            <p>n-buna(ナブナ)同时也是日本niconico动画上的VOCALOID职人、词曲作家。</p>
+                            <p>术拿代表作品：《透明エレジー》、《ウミユリ海底譚》、《アリストラスト》</p>
+                            <p>他的曲子就如同幻想与现实两者互相融合，在现实的题材中又带点奇幻风格，让人分不清两者界限并深陷其中，就像是浏览一个个充满新奇事物的新奇世界一样丰富。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="member main-member">
+                        <div class="member-img">
+                           <img src="../images/suis.png" style="object-fit: cover; width: 100%; height: 100%;" alt="n-buna">
+                        </div>
+                        <div class="member-info">
+                            <h3>suis</h3>
+                            <p>主唱</p>
+                        </div>
+                        <div class="member-bio">
+                            <p>suis从小就非常喜欢唱歌。但令人意外的是，她从未想过要成为歌手。她认为能以ヨルシカ成员的身份活动纯粹是碰巧走运。</p>
+                            <p> 「我和n-buna君之间有一位共同的朋友，当时正是通过这位朋友的推荐才加入ヨルシカ的。从那以后，我才逐渐意识到唱歌也可以作为工作。」 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="assistant-title">协助成员</h3>
+            
+            <div class="members-grid">
+                <div class="member">
+                    <img src="../images/guitar.png" style="object-fit: cover; width: 100%; height: 100%;" alt="下鶴光康">
+                    <div class="member-info">
+                        <h3>下鶴光康</h3>
+                        <p>吉他手</p>
+                    </div>
+                </div>
+                <div class="member">
+                    <img src="../images/bass.png" style="object-fit: cover; width: 100%; height: 100%;" alt="キタニタツヤ ">
+                    <div class="member-info">
+                        <h3>キタニタツヤ </h3>
+                        <p>贝斯手</p>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="member">
+                    <img src="../images/drum.png" style="object-fit: cover; width: 100%; height: 100%;" alt="Masack">
+                    <div class="member-info">
+                        <h3>Masack</h3>
+                        <p>鼓手</p>
+                    </div>
+                </div>
+                
+                <div class="member">
+                    <img src="../images/key.png" style="object-fit: cover; width: 100%; height: 100%;" alt="平畑徹也">
+                    <div class="member-info">
+                        <h3>平畑徹也</h3>
+                        <p>键盘手</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <p>此网站仅供学习交流所用</p>
+                <p>联系作者：926469754@qq.com
+                </p>
+            </div>
+            <p class="copyright">ヨルシカ 版权所有</p>
+        </div>
+    </footer>
+    </main>
+</body>
+</html>

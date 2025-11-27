@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヨルシカ 演出经历</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background:
+            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url('../images/夜空.png');
+            background-size: cover; 
+            padding: 2px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0px;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            padding: 5px 10px;
+        }
+        
+        nav ul li a:hover {
+            color: #aaa;
+            border-bottom: 2px solid #fff;
+        }
+        
+        /* 演出经历页面特定样式 */
+        .page-title {
+            text-align: center;
+            padding: 60px 0 30px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 2px;
+            background-color: #fff;
+            margin: 15px auto;
+        }
+        
+        /* 演出经历时间线样式 */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #fff;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 30px;
+            position: relative;
+            margin: 40px 0;
+            width: 50%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            justify-content: flex-start;
+            padding-left: 30px;
+            padding-right: 0;
+            margin-left: 50%;
+        }
+        
+        .timeline-content {
+            background-color: #111;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-year {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-description {
+            color: #aaa;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .timeline-image {
+            width: 100%;
+            height: 200px;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 1px solid #444;
+            margin-top: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #fff;
+            border: 4px solid #000;
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even):before {
+            left: -10px;
+            right: auto;
+        }
+        
+        /* 乐队评价样式 */
+        .evaluation-section {
+            background-color: #111;
+            padding: 50px 0;
+        }
+        
+        .evaluation-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: justify;
+            line-height: 1.8;
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        .evaluation-content p {
+            margin-bottom: 20px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                margin-left: 0;
+            }
+            
+            .timeline-item:before {
+                left: 20px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even):before {
+                left: 20px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .evaluation-content {
+                padding: 0 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ヨルシカ</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.htm">首页</a></li>
+                    <li><a href="成员介绍.html">成员介绍</a></li>
+                    <li><a href="乐队活动.html">乐队活动</a></li>
+                    <li><a href="音乐专辑.html">音乐专辑</a></li>
+                    <li><a href="演出信息.html" style="color: #aaa; border-bottom: 2px solid #fff;">演出经历</a></li>
+                    <li><a href="https://yorushika.com/">官方网站</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <div class="page-title">
+        演出经历
+    </div>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 演出历程时间线 -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">演出历程</h2>
+                <div class="timeline">
+                    <!-- 2017年 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2017</div>
+                            <h3 class="timeline-title">「夏草が邪魔をする」首次现场演出</h3>
+                            <p class="timeline-description">
+                                7月9日，举行首次现场音乐表演"夏草が邪魔をする"，标志着乐队现场演出的开始。
+                            </p>
+                            <div class="timeline-image" style="background-image: url('../images/first live.png');">
+                                <!-- 如果图片无法显示，会显示背景色 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2019年 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2019</div>
+                            <h3 class="timeline-title">「月光」巡回演唱会</h3>
+                            <p class="timeline-description">
+                                10月17日，开始举行"ヨルシカ Live Tour 2019「月光」"巡回演唱会。12月11日，举行了"月光"巡回演唱会的追加公演，获得热烈反响。
+                            </p>
+                            <div class="timeline-image" style="background-image: url('../images/月光.jpg');">
+                                <!-- 如果图片无法显示，会显示背景色 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2021年 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2021</div>
+                            <h3 class="timeline-title">「前世」线上演唱会</h3>
+                            <p class="timeline-description">
+                                1月9日，举行"ヨルシカ LIVE「前世」"线上演唱会，通过数字平台与全球粉丝互动。
+                            </p>
+                            <div class="timeline-image" style="background-image: url('../images/前世.jpg');">
+                                <!-- 如果图片无法显示，会显示背景色 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2022年 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2022</div>
+                            <h3 class="timeline-title">「月光」再演巡回</h3>
+                            <p class="timeline-description">
+                                2022年3月10日，开始举行"ヨルシカ LIVE TOUR 2022「月光」再演"巡回演唱会，重新演绎经典曲目。
+                            </p>
+                            <div class="timeline-image" style="background-image: url('../images/月光.png');">
+                                <!-- 如果图片无法显示，会显示背景色 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2023年 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023</div>
+                            <h3 class="timeline-title">「前世」线下演唱会</h3>
+                            <p class="timeline-description">
+                                1月24日起，开始举行"ヨルシカ LIVE 2023「前世」"演唱会，将线上演出成功转化为线下体验。
+                            </p>
+                            <div class="timeline-image" style="background-image: url('../images/前世.png');">
+                                <!-- 如果图片无法显示，会显示背景色 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 乐队评价 -->
+        <section class="section evaluation-section">
+            <div class="container">
+                <h2 class="section-title">乐队评价</h2>
+                <div class="evaluation-content">
+                    <p>Yorushika的第三张迷你专辑《创作》是部以"春天"为主题而创作的作品，它就像是由创作者认真书写出来的一本略带讽刺、荒诞、幽默的短篇小说。而该作的歌词、旋律与歌声都足够优秀，因此使得这部作品脱颖而出。Yorushika在创作歌曲的时候并没有贯彻死板的概念，从而使得听众在欣赏这部作品的时候，可以稍作放松，好好地沉浸在Yorushika所创作出的夜半的世界中。</p>
+                    
+                    <p>词曲创作者n-buna所创作出的歌词常常在简单的表达中混入不常见的词汇与富有深意的暗喻，如《蓝二乘》中的"这首诗还有80个字"与《傍晚风平浪静，某处，烟火》中的"用吉他弹奏两小节，这首歌的歌词共380字"之类的自我介绍性的歌词，都不免令听众为之感到震惊；除此之外，亦是常常创作出带有文字游戏、押韵以及富有文言风格的词句。而主唱suis则是能自如地控制自己的声音，她可以通过自由地变化语调、音色，用独白式的歌词为歌曲中的角色塑造出有血有肉的形体。无不展现出了他们的歌曲所富含的独特性与表现力。</p>
+                    
+                    <p>与另一个双人音乐组合YOASOBI的"根据小说创作歌曲"的创作理念有所不同的是，Yorushika擅长通过一张专辑编织出一个大故事，专辑中的每首歌曲都在故事中占有一席之地并很好地发挥各自的作用。（cinra评）</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <p>此网站仅供学习交流所用</p>
+                <p>联系作者：926469754@qq.com
+                </p>
+            </div>
+            <p class="copyright">ヨルシカ 版权所有</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

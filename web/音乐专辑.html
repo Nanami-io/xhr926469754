@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐专辑 | 夜鹿乐队</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background:
+            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url('../images/夜空.png');
+            background-size: cover; 
+            padding: 2px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0px;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            padding: 5px 10px;
+        }
+        
+        nav ul li a:hover {
+            color: #aaa;
+            border-bottom: 2px solid #fff;
+        }
+     
+        
+        /* 页面标题样式 */
+        .page-title {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+        
+        /* 专辑网格样式 */
+        .albums-container {
+            padding: 20px 0;
+        }
+        
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        .album-card {
+            background-color: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 150%; /* 4:3 比例 */
+        }
+        
+        .album-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+        }
+        
+        .album-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .album-cover {
+            width: 100%;
+            height: 75%; /* 封面占卡片高度的75% */
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .album-card:hover .album-cover img {
+            filter: blur(5px);
+            transform: scale(1.05);
+        }
+        
+        .album-info {
+            padding: 15px;
+            height: 25%; /* 信息区域占卡片高度的25% */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .album-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .mv-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border: 1px solid #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .mv-link:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        /* 曲目列表悬停效果 */
+        .track-list {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+            z-index: 2;
+            max-height: 70%;
+            overflow-y: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        
+        .album-card:hover .track-list {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .track-list h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .track-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #333;
+            font-size: 0.8rem;
+        }
+        
+        .track-number {
+            color: #aaa;
+            width: 25px;
+        }
+        
+        .track-title {
+            flex: 1;
+        }
+        
+        .track-duration {
+            color: #aaa;
+            width: 40px;
+            text-align: right;
+        }
+        
+        .album-total {
+            text-align: right;
+            padding-top: 10px;
+            border-top: 1px solid #444;
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: 60px;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .source {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #555;
+        }
+        
+        /* 响应式设计 */
+        @media screen and (max-width: 768px) {
+            .albums-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 30px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .albums-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ヨルシカ</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.htm">首页</a></li>
+                    <li><a href="成员介绍.html">成员介绍</a></li>
+                    <li><a href="乐队活动.html">乐队活动</a></li>
+                    <li><a href="音乐专辑.html" style="color: #aaa; border-bottom: 2px solid #fff;">音乐专辑</a></li>
+                    <li><a href="演出经历.html">演出经历</a></li>
+                    <li><a href="https://yorushika.com/">官方网站</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <div class="page-title">
+        音乐专辑
+    </div>
+
+    <!-- 专辑网格 -->
+    <div class="container albums-container">
+        <div class="albums-grid">
+            <!-- 夏草が邪魔をする -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/夏草が邪魔をする.jpg" alt="夏草が邪魔をする">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">夏陰、ピアノを弾く</span>
+                                <span class="track-duration">1:34</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">カトレア</span>
+                                <span class="track-duration">3:08</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">言って。</span>
+                                <span class="track-duration">4:02</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">あの夏に咲け</span>
+                                <span class="track-duration">4:18</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">飛行</span>
+                                <span class="track-duration">1:30</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">靴の花火</span>
+                                <span class="track-duration">5:03</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">雲と幽霊</span>
+                                <span class="track-duration">5:15</span>
+                            </div>
+                            <div class="album-total">总时长：24:50</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">夏草が邪魔をする</h3>
+                            <div class="album-meta">发行日期：2017年6月28日 · 迷你专辑</div> 
+                        </div>
+                        <a href="https://www.bilibili.com/video/av11483860?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 負け犬にアンコールはいらない -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/負け犬にアンコールはいらない.jpg" alt="負け犬にアンコールはいらない">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">前世</span>
+                                <span class="track-duration">1:19</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">負け犬にアンコールはいらない</span>
+                                <span class="track-duration">3:54</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">爆弾魔</span>
+                                <span class="track-duration">3:37</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">ヒッチコック</span>
+                                <span class="track-duration">3:42</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">落下</span>
+                                <span class="track-duration">1:14</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">準透明少年</span>
+                                <span class="track-duration">4:41</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">ただ君に晴れ</span>
+                                <span class="track-duration">3:18</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">8</span>
+                                <span class="track-title">冬眠</span>
+                                <span class="track-duration">5:01</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">9</span>
+                                <span class="track-title">夏、バス停、君を待つ</span>
+                                <span class="track-duration">1:56</span>
+                            </div>
+                            <div class="album-total">总时长：28:42</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">負け犬にアンコールはいらない</h3>
+                            <div class="album-meta">发行日期：2018年5月9日 · 迷你专辑</div>
+                        </div>
+                        <a href="https://www.bilibili.com/video/av22437525?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- だから僕は音楽を辞めた -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/だから僕は音楽を辞めた.png" alt="だから僕は音楽を辞めた">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">8/31</span>
+                                <span class="track-duration">1:54</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">藍二乗</span>
+                                <span class="track-duration">4:05</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">八月、某、月明かり</span>
+                                <span class="track-duration">4:36</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">詩書きとコーヒー</span>
+                                <span class="track-duration">4:07</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">7/13</span>
+                                <span class="track-duration">1:38</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">踊ろうぜ</span>
+                                <span class="track-duration">4:13</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">六月は雨上がりの街を書く</span>
+                                <span class="track-duration">3:58</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">8</span>
+                                <span class="track-title">五月は花緑青の窓辺から</span>
+                                <span class="track-duration">3:05</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">9</span>
+                                <span class="track-title">夜紛い</span>
+                                <span class="track-duration">3:43</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">10</span>
+                                <span class="track-title">5/6</span>
+                                <span class="track-duration">2:27</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">11</span>
+                                <span class="track-title">パレード</span>
+                                <span class="track-duration">4:59</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">12</span>
+                                <span class="track-title">エルマ</span>
+                                <span class="track-duration">3:39</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">13</span>
+                                <span class="track-title">4/10</span>
+                                <span class="track-duration">2:50</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">14</span>
+                                <span class="track-title">だから僕は音楽を辞めた</span>
+                                <span class="track-duration">4:02</span>
+                            </div>
+                            <div class="album-total">总时长：49:16</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">だから僕は音楽を辞めた</h3>
+                            <div class="album-meta">发行日期：2019年4月10日 · 专辑</div>
+                        </div>
+                        <a href="https://www.bilibili.com/video/av47406732?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+             <!-- エルマ -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/エルマ.jpg" alt="エルマ">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">車窓</span>
+                                <span class="track-duration">1:55</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">憂一乗</span>
+                                <span class="track-duration">4:32</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">夕凪、某、花惑い</span>
+                                <span class="track-duration">3:18</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">雨とカプチーノ</span>
+                                <span class="track-duration">4:29</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">湖の街</span>
+                                <span class="track-duration">1:50</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">神様のダンス</span>
+                                <span class="track-duration">3:52</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">雨晴るる</span>
+                                <span class="track-duration">3:42</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">8</span>
+                                <span class="track-title">歩く</span>
+                                <span class="track-duration">3:26</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">9</span>
+                                <span class="track-title">心に穴が空いた</span>
+                                <span class="track-duration">4:24</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">10</span>
+                                <span class="track-title">森の教会</span>
+                                <span class="track-duration">1:59</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">11</span>
+                                <span class="track-title">声</span>
+                                <span class="track-duration">4:48</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">12</span>
+                                <span class="track-title">エイミー</span>
+                                <span class="track-duration">3:32</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">13</span>
+                                <span class="track-title">海底、月明かり</span>
+                                <span class="track-duration">2:25</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">14</span>
+                                <span class="track-title">ノーチラス</span>
+                                <span class="track-duration">4:00</span>
+                            </div>
+                            <div class="album-total">总时长：48:12</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">エルマ</h3>
+                            <div class="album-meta">发行日期：2019年8月28日 · 专辑</div>
+                        </div>
+                        <a href="https://www.bilibili.com/video/av64112673?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 盗作 -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/盗作.jpg" alt="盗作">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">音楽泥棒の自白</span>
+                                <span class="track-duration">1:12</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">晝鳶</span>
+                                <span class="track-duration">2:42</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">春ひさぎ</span>
+                                <span class="track-duration">3:37</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">爆弾魔</span>
+                                <span class="track-duration">3:35</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">青年期、空き巣</span>
+                                <span class="track-duration">1:16</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">レプリカント</span>
+                                <span class="track-duration">3:37</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">花人局</span>
+                                <span class="track-duration">5:32</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">8</span>
+                                <span class="track-title">朱夏期、音楽泥棒</span>
+                                <span class="track-duration">1:48</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">9</span>
+                                <span class="track-title">盜作</span>
+                                <span class="track-duration">3:59</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">10</span>
+                                <span class="track-title">思想犯</span>
+                                <span class="track-duration">4:11</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">11</span>
+                                <span class="track-title">逃亡</span>
+                                <span class="track-duration">4:47</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">12</span>
+                                <span class="track-title">幼年期、思い出の中</span>
+                                <span class="track-duration">2:20</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">13</span>
+                                <span class="track-title">夜行</span>
+                                <span class="track-duration">3:22</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">14</span>
+                                <span class="track-title">花に亡霊</span>
+                                <span class="track-duration">4:01</span>
+                            </div>
+                            <div class="album-total">总时长：45:59</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">盗作</h3>
+                            <div class="album-meta">发行日期：2020年7月29日 · 专辑</div>
+                           
+                        </div>
+                        <a href="https://www.bilibili.com/video/BV1N5411e7v8?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 創作 -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/創作.jpg" alt="創作">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">強盗と花束</span>
+                                <span class="track-duration">3:10</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">春泥棒</span>
+                                <span class="track-duration">4:50</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">創作</span>
+                                <span class="track-duration">1:34</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">風を食む</span>
+                                <span class="track-duration">4:26</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">嘘月</span>
+                                <span class="track-duration">4:50</span>
+                            </div>
+                            <div class="album-total">总时长：18:50</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">創作</h3>
+                            <div class="album-meta">发行日期：2021年1月27日 · EP</div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=示例视频ID" class="mv-link" target="_blank">观看MV</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 幻燈 -->
+            <div class="album-card">
+                <div class="album-inner">
+                    <div class="album-cover">
+                        <img src="../images/幻燈.jpg" alt="幻燈">
+                        <div class="track-list">
+                            <h3>曲目列表</h3>
+                            <div class="track-item">
+                                <span class="track-number">1</span>
+                                <span class="track-title">都落ち</span>
+                                <span class="track-duration">4:10</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">2</span>
+                                <span class="track-title">ブレーメン</span>
+                                <span class="track-duration">4:33</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">3</span>
+                                <span class="track-title">チノカテ</span>
+                                <span class="track-duration">4:08</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">4</span>
+                                <span class="track-title">月に吠える</span>
+                                <span class="track-duration">4:26</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">5</span>
+                                <span class="track-title">451</span>
+                                <span class="track-duration">3:30</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">6</span>
+                                <span class="track-title">又三郎</span>
+                                <span class="track-duration">3:49</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">7</span>
+                                <span class="track-title">老人と海</span>
+                                <span class="track-duration">4:15</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">8</span>
+                                <span class="track-title">左右盲</span>
+                                <span class="track-duration">4:27</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">9</span>
+                                <span class="track-title">アルジャーノン</span>
+                                <span class="track-duration">4:13</span>
+                            </div>
+                            <div class="track-item">
+                                <span class="track-number">10</span>
+                                <span class="track-title">第一夜</span>
+                                <span class="track-duration">4:22</span>
+                            </div>
+                            <div class="album-total">总时长：42:13</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div>
+                            <h3 class="album-title">幻燈</h3>
+                            <div class="album-meta">发行日期：2023年4月5日 · 音乐画集</div>
+
+                        <a href="https://www.bilibili.com/video/BV1Ay4y1174k?vd_source=fef63dac20e2495e5680d1c8423c103c" class="mv-link" target="_blank">专辑试听</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <p>此网站仅供学习交流所用</p>
+                <p>联系作者：926469754@qq.com</p>
+            </div>
+            <p class="copyright">ヨルシカ 版权所有</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヨルシカ 乐队活动</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background:
+            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url('../images/夜空.png');
+            background-size: cover; 
+            padding: 2px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0px;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            padding: 5px 10px;
+        }
+        
+        nav ul li a:hover {
+            color: #aaa;
+            border-bottom: 2px solid #fff;
+        }
+
+        /* 主内容样式 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 介绍卡片样式 */
+        .intro-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #fff;
+            max-width: 1000px;
+        }
+
+        .intro-card h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .intro-card h2 i {
+            margin-right: 10px;
+        }
+
+        .intro-card p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+
+        .highlight {
+            color: #aaa;
+            font-weight: 600;
+        }
+
+        /* 时间线样式 - 改为单列方块 */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-content h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-content .date {
+            font-weight: 600;
+            color: #aaa;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .timeline-content .date i {
+            margin-right: 8px;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            color: #ccc;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: 3rem;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .source {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        /* 响应式设计 */
+        @media screen and (max-width: 768px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .intro-card {
+                padding: 1.5rem;
+                margin: 2rem auto;
+            }
+            
+            .timeline-item {
+                padding: 1.5rem;
+            }
+            
+            .timeline-content h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ヨルシカ</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.htm">首页</a></li>
+                    <li><a href="成员介绍.html">成员介绍</a></li>
+                    <li><a href="乐队活动.html" style="color: #aaa; border-bottom: 2px solid #fff;">乐队活动</a></li>
+                    <li><a href="音乐专辑.html">音乐专辑</a></li>
+                    <li><a href="演出经历.html">演出经历</a></li>
+                    <li><a href="https://yorushika.com/">官方网站</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="intro-card">
+            <h2><i class="fas fa-music"></i> 乐队简介</h2>
+            <p>日本音乐组合<span class="highlight">ヨルシカ</span>成立于2017年，由作曲家<span class="highlight">n-buna</span>与主唱<span class="highlight">suis</span>组成。</p>
+            <p>乐队名字出自歌曲「雲と幽霊」中的歌词「夜しかもう眠れずに」。乐队logo的主题为月与月的互面，同时也成为了时钟的指针，意思是从6点开始为夜晚。</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2017年</div>
+                    <h3>乐队成立与出道</h3>
+                    <p>4月发布《靴の花火》宣布出道；6月发售首张迷你专《夏草が邪魔をする》；7月举行首次live「夏草が邪魔をする」。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2018年</div>
+                    <h3>第二张迷你专辑</h3>
+                    <p>5月发售第二张迷你专《負け犬にアンコールはいらない》，在Oricon独立音乐专辑榜中最高排名第5。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2019年</div>
+                    <h3>正式专辑与巡回</h3>
+                    <p>4月发售首张正式专《だから僕は音楽を辞めた》；8月发售第二张正式专《エルマ》；10月举行巡回演唱会「月光」。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2020年</div>
+                    <h3>金唱片奖与电影配乐</h3>
+                    <p>2月获"日本金唱片大奖"年度最佳新人；6月为电影《想哭的我戴上了猫的面具》提供主题曲；7月发售第三张正式专《盗作》。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2021-2023年</div>
+                    <h3>持续创作与动画配乐</h3>
+                    <p>2021年发售EP《創作》；2022-2023年为多部日剧和动画提供主题曲，包括《魔法翻新》《大雪海的凯纳》《我心里危险的东西》等。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="date"><i class="fas fa-calendar-alt"></i> 2024-2025年</div>
+                    <h3>最新动态</h3>
+                    <p>2024年为《葬送的芙莉莲》提供片头曲《晴る》；2025年将为《地。-关于地球的运动-》和《小市民系列 第2期》提供歌曲。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <p>此网站仅供学习交流所用</p>
+                <p>联系作者：926469754@qq.com</p>
+            </div>
+            <p class="copyright">ヨルシカ 版权所有</p>
+          
+        </div>
+    </footer>
+    
+    <script>
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            timelineItems.forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
